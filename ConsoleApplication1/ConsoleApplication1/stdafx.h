@@ -7,15 +7,15 @@
 
 #include "targetver.h"
 
-#include <stdio.h>
-#include <tchar.h>
+#include <cstdio>
+
 
 struct ListNode {
 	int val;
 	struct ListNode *next;
-	/*        ListNode(int x) :
+	ListNode(int x) :
 	val(x), next(NULL) {
-	}*/
+	}
 };
 
 

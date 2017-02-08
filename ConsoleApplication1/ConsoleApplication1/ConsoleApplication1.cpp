@@ -6,9 +6,9 @@
 #include <string>
 #include <cmath>
 #include <vector>
-#include "stdlib.h"
 #include <algorithm>
 #include <set>
+#include <cstdlib>
 #include <stack>
 #include <ctime>
 
@@ -495,7 +495,7 @@ int main()
 	ReverseTree(&root);
 	PreOrder(root);*/
 	//evaluate-reverse-polish-notation
-	vector<string> expression = { "-3", "9", "*" };
+/*	vector<string> expression = { "-3", "9", "*" };
 
 	stack<int> temp;
 	vector<string>::iterator iter;
@@ -537,11 +537,33 @@ int main()
 	}
 	result = temp.top();
 	temp.pop();
-	cout << result << endl;
+	cout << result << endl;*/
+    
+    //letcode Sort a linked list in O(n log n) time using constant space complexity.
+    
 
 
+	int n;
+	cin >> n;
+	int *p = new int[n];
+	for (int i = 0; i < n; i++)
+	{
+		cin >> p[i];
+	}
+	ListNode *head = new ListNode(p[0]);
+	ListNode *q, *r;
+	q = head;
+	for (int i = 1; i < n; i++)
+	{
+		r = new ListNode(p[i]);
+		q->next = r;
+		q = r;
+	}
+    
+    
 
-	system("pause");
+
+    
 	return 0;
 }
 
