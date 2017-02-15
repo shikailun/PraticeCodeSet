@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "LeetCode.h"
 #include <iostream>
 #include <string>
 #include <cmath>
@@ -17,10 +18,75 @@ using namespace std;
 
 
 
+struct ErrorRecord {
+	string address;
+	int linenumber;
+	int count;
+
+
+	ErrorRecord() {
+		count = 1;
+	}
+	bool operator==(const ErrorRecord &a)
+	{
+		return (a.address == address) && (a.linenumber == linenumber);
+	}
+};
+
+
+//单链表归并排序
+/*ListNode *mergeList(ListNode *l1, ListNode * l2)
+{
+	ListNode *head = new ListNode(0),*r;
+	r = head;
+	while (l1&&l2)
+	{
+		if (l1->val <= l2->val)
+		{
+			r->next = l1;
+			l1 = l1->next;
+			
+		}
+		else
+		{
+			r->next = l2;
+			l2 = l2->next;
+		}
+		r = r->next;
+	}
+	if (l1 != NULL)
+		r->next = l1;
+	else
+	{
+		r->next = l2;
+	}
+	return head->next;
+}
+ListNode *sortList(ListNode *head)
+{
+	if (head == NULL || head->next == NULL)
+	{
+		return head;
+	}
+	ListNode *slow = head;
+	ListNode *fast = head->next;
+
+
+	while (fast && fast->next != NULL)
+	{
+		fast = fast->next->next;
+		slow = slow->next;
+	}
+
+	ListNode *headb = slow->next;
+	slow->next = NULL;
+	return mergeList(sortList(head),sortList(headb));
+}*/
+
 
 
 // 华为编程  开发一个简单错误记录功能小模块 抽取路径中的文件名称
-string Getfilename(string filename)
+/*string Getfilename(string filename)
 {
 	string address;
 	address = filename.substr(filename.find_last_of('\\') + 1, filename.length() - filename.find_last_of('\\'));
@@ -33,25 +99,11 @@ string Getfilename(string filename)
 	return address;
 
 
-}
+}*/
 
-//创建二叉树
-void CreateTree(TreeNode **t)
-{
-	char a;
-	cin >> a;
-	if (a == '#')
-		*t = NULL;
-	else
-	{
-		*t = new TreeNode;
-		(*t)->a = a;
-		CreateTree(&((*t)->left_tree));
-		CreateTree(&((*t)->right_tree));
-	}
-}
+
 //先序遍历二叉树
-void PreOrder(TreeNode *t)
+/*void PreOrder(TreeNode *t)
 {
 	if (t != NULL)
 	{
@@ -60,9 +112,9 @@ void PreOrder(TreeNode *t)
 		PreOrder(t->right_tree);
 	}
 
-}
+}*/
 //镜像二叉树
-void ReverseTree(TreeNode **t)
+/*void ReverseTree(TreeNode **t)
 {
 	if ((*t) == NULL)
 		return;
@@ -73,9 +125,9 @@ void ReverseTree(TreeNode **t)
 	ReverseTree(&(*t)->right_tree);
 
 
-}
+}*/
 //evaluate-reverse-polish-notation
-void FunctionStack(stack<int> &temp, char operation)
+/*void FunctionStack(stack<int> &temp, char operation)
 {
 	int result = 0, a = 0, b = 0;
 
@@ -93,7 +145,7 @@ void FunctionStack(stack<int> &temp, char operation)
 		break;
 	}
 	temp.push(result);
-}
+}*/
 int main()
 {
 	//十六进制转换为十进制
@@ -539,11 +591,8 @@ int main()
 	temp.pop();
 	cout << result << endl;*/
     
-    //letcode Sort a linked list in O(n log n) time using constant space complexity.
-    
-
-
-	int n;
+    //letcode Sort a linked list in O(n log n) time using constant space complexity. 单链表归并排序
+    int n;
 	cin >> n;
 	int *p = new int[n];
 	for (int i = 0; i < n; i++)
@@ -559,11 +608,24 @@ int main()
 		q->next = r;
 		q = r;
 	}
+	Solution s;
+	s.reorderList(head);
+//	q = sortList(head);
+	q = head;
+	while (q)
+	{
+		cout << q->val;
+		q = q->next;
+
+	}
+
+	
+	
     
     
 
 
-    
+	system("pause");
 	return 0;
 }
 
