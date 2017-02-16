@@ -53,13 +53,13 @@ void Solution::postorder(vector<int> &result, TreeNode *root)
 
 
 //reorder-list Given a singly linked list L: L0¡úL1¡ú¡­¡úLn-1¡úLn, reorder it to : L0¡úLn¡úL1¡úLn - 1¡úL2¡úLn - 2¡ú¡­
-void Solution::reorderList(ListNode *head) {
+/*void Solution::reorderList(ListNode *head) {
 	if (head == NULL)
 	{
 		return;
 	}
 		ListNode * slow = head;
-		ListNode * fast = head->next;
+		ListNode * fast = head;
 		while (fast && fast->next != NULL)
 		{
 			slow = slow->next;
@@ -91,8 +91,44 @@ void Solution::reorderList(ListNode *head) {
 			p->next = r;
 			p = p->next->next;
 		}
+	}*/
+//Given a linked list, return the node where the cycle begins. If there is no cycle, returnnull.
+ListNode* Solution::detectCycle(ListNode *head)
+{
+	if (head == NULL)
+		return NULL;
+	ListNode* slow = head;
+	ListNode* fast = head;
+	while (fast->next != NULL)
+	{
+		slow = slow->next;
+		fast = fast->next->next;
+		if (fast == NULL)
+		{
+			return NULL;
+		}
+		if (fast == slow)
+		{
+			break;
+		}
 
+
+	}
+	if (fast->next == NULL)
+	{
+		return NULL;
+	}
+
+	fast = head;
+	while (fast != slow)
+	{
+		fast = fast->next;
+		slow = slow->next;
+	}
+	return fast;
 }
+
+
 
 
 

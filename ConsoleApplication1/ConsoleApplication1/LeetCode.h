@@ -22,6 +22,6 @@ public:
 //	vector<int> postorderTraversal(TreeNode *root);
 //	void postorder(vector<int> &result, TreeNode *root);
 
-	void reorderList(ListNode *head);
-    
+//	void reorderList(ListNode *head);
+	ListNode * detectCycle(ListNode *head);
 };
