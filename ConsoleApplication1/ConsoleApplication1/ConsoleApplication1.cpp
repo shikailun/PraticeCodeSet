@@ -12,6 +12,8 @@
 #include <cstdlib>
 #include <stack>
 #include <ctime>
+#include "pointToOffer.h"
+//#include <hash_map>
 
 using namespace std;
 
@@ -592,7 +594,7 @@ int main()
 	cout << result << endl;*/
     
     //letcode Sort a linked list in O(n log n) time using constant space complexity. µ¥Á´±í¹é²¢ÅÅÐò
-    int n;
+/*    int n;
 	cin >> n;
 	int *p = new int[n];
 	for (int i = 0; i < n; i++)
@@ -617,12 +619,15 @@ int main()
 		cout << q->val;
 		q = q->next;
 
-	}
+	}*/
 
-	
-	
-    
-    
+
+
+char *str = "        ";
+Solution s;
+s.replaceSpace(str, 2);
+cout << str;
+		
 
 
 	system("pause");
