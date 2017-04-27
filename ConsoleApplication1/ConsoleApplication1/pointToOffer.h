@@ -1,31 +1,30 @@
 #pragma once
 #include <iostream>
 #include <stack>
+#include <vector>
+#include <queue>
 using namespace std;
 
 
-struct ListNode {
-	int val;
-	struct ListNode *next;
-	ListNode(int x) :
-		val(x), next(NULL) {}
-};
-class Solution
-{
-public:
 
-//	int  NumberOf1(int n) {}
+//class Solution
+//{
+//public:
+
+//	int  NumberOf1(int n); 
 
 //	void replaceSpace(char *str, int length);
 
 //	void push(int node);
 //	int pop();
-	ListNode* Merge(ListNode* pHead1, ListNode* pHead2);
-	
+//	ListNode* Merge(ListNode* pHead1, ListNode* pHead2);
+//    int Fibonacci(int n);
+//	vector<int> PrintFromTopToBottom(TreeNode* root);
+//	TreeNode* reConstructBinaryTree(vector<int> pre, vector<int> vin);
 
 
-private:
+//private:
 //	stack<int> stack1;
 //	stack<int> stack2;
 
-};
+//};

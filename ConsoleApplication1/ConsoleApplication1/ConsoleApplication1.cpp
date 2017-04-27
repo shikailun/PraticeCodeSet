@@ -20,6 +20,10 @@ using namespace std;
 
 
 
+
+
+
+
 struct ErrorRecord {
 	string address;
 	int linenumber;
@@ -620,14 +624,6 @@ int main()
 		q = q->next;
 
 	}*/
-
-
-
-char *str = "        ";
-Solution s;
-s.replaceSpace(str, 2);
-cout << str;
-		
 
 
 	system("pause");
