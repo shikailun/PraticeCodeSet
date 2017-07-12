@@ -1,4 +1,4 @@
-// ConsoleApplication1.cpp : Defines the entry point for the console application.
+ï»¿// ConsoleApplication1.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -13,7 +13,8 @@
 #include <stack>
 #include <ctime>
 #include "pointToOffer.h"
-//#include <hash_map>
+#include <unordered_map>
+
 
 using namespace std;
 
@@ -22,7 +23,59 @@ using namespace std;
 
 
 
+bool validWordAbbreviation(string word, string abbr) {
+	// code here
+	if (word.size() == 0 || abbr.size() == 0)
+		return false;
+	int j = 0, k = 0;
+	int i;
+	for ( i = 0; i < abbr.size(); i++)
+	{
 
+
+		if (abbr[i] < 122 && abbr[i] > 61)
+		{
+			if (word[j] == abbr[i])
+			{
+				j++;
+				continue;
+			}
+			else
+			{
+				return false;
+			}
+
+		}
+		else
+		{
+			k = abbr[i]-'0';
+			if ((k + j) >= word.size() && j!= 0)
+			{
+				return false;
+			}
+			else if (k == word.size() && j == 0 && abbr.size() == 1)
+			{
+				return true;
+			}
+			else
+			{
+				j = j + k;
+			}
+
+		}
+
+
+	}
+	if (i >= abbr.size() && j >= word.size())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	
+}
 
 struct ErrorRecord {
 	string address;
@@ -40,7 +93,9 @@ struct ErrorRecord {
 };
 
 
-//µ¥Á´±í¹é²¢ÅÅĞò
+
+
+//å•é“¾è¡¨å½’å¹¶æ’åº
 /*ListNode *mergeList(ListNode *l1, ListNode * l2)
 {
 	ListNode *head = new ListNode(0),*r;
@@ -91,7 +146,7 @@ ListNode *sortList(ListNode *head)
 
 
 
-// »ªÎª±à³Ì  ¿ª·¢Ò»¸ö¼òµ¥´íÎó¼ÇÂ¼¹¦ÄÜĞ¡Ä£¿é ³éÈ¡Â·¾¶ÖĞµÄÎÄ¼şÃû³Æ
+// åä¸ºç¼–ç¨‹  å¼€å‘ä¸€ä¸ªç®€å•é”™è¯¯è®°å½•åŠŸèƒ½å°æ¨¡å— æŠ½å–è·¯å¾„ä¸­çš„æ–‡ä»¶åç§°
 /*string Getfilename(string filename)
 {
 	string address;
@@ -108,7 +163,7 @@ ListNode *sortList(ListNode *head)
 }*/
 
 
-//ÏÈĞò±éÀú¶ş²æÊ÷
+//å…ˆåºéå†äºŒå‰æ ‘
 /*void PreOrder(TreeNode *t)
 {
 	if (t != NULL)
@@ -119,42 +174,146 @@ ListNode *sortList(ListNode *head)
 	}
 
 }*/
-//¾µÏñ¶ş²æÊ÷
-/*void ReverseTree(TreeNode **t)
-{
-	if ((*t) == NULL)
-		return;
-	if ((*t)->left_tree == NULL && (*t)->right_tree == NULL)
-		return;
-	swap((*t)->left_tree, (*t)->right_tree);
-	ReverseTree(&(*t)->left_tree);
-	ReverseTree(&(*t)->right_tree);
 
-
-}*/
 //evaluate-reverse-polish-notation
-/*void FunctionStack(stack<int> &temp, char operation)
+/*int evalRPN(vector<string> &tokens)
 {
-	int result = 0, a = 0, b = 0;
+        stack<int> numbers;
+Â Â Â Â Â Â Â Â for(auto token : tokens)
+Â Â Â Â Â Â Â Â {
+Â Â Â Â Â Â Â Â Â Â Â Â if(token == "+" || token == "-" || token == "*" || token == "/")
+Â Â Â Â Â Â Â Â Â Â Â Â Â {
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â int a,b,res;
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â b=numbers.top();numbers.pop();
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â a=numbers.top();numbers.pop();
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if(token == "+")
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â res=a+b;
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â else if(token == "-")
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â res=a-b;
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â else if(token == "*")
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â res=a*b;
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â else
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â res=a/b;
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â numbers.push(res);
+Â Â Â Â Â Â Â Â Â Â Â Â Â }
+Â Â Â Â Â Â Â Â Â Â Â Â else
+Â Â Â Â Â Â Â Â Â Â Â Â {
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â stringstream ss;
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ss<<token;
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â int temp;
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ss>>temp;
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â numbers.push(temp);
+Â Â Â Â Â Â Â Â Â Â Â Â }
+Â Â Â Â Â Â Â Â }
+Â Â Â Â Â Â Â Â return numbers.top();
+}*/
 
-	a = temp.top();
-	temp.pop();
-	b = temp.top();
-	temp.pop();
-	switch (operation)
+//å¯»æ‰¾coder
+/*bool compare(const pair<string, int> &t1, const pair<string, int> &t2)
+{
+	return t1.second > t2.second;
+}
+bool JudgeCoder(string &s1)
+{
+	bool flag = false;
+	int i = 0;
+	if (s1.size() == 0)
 	{
-	case '+': result = a + b; break;
-	case '-': result = b - a; break;
-	case '*': result = b * a; break;
-	case '/': if (a == 0)break; result = b / a; break;
-	default:
-		break;
+		return false;
 	}
-	temp.push(result);
+	for (; i < 5; i++)
+	{ 
+		if (s1[i] == '\0')
+			return flag;
+		switch (i)
+		{
+		case 0:
+			if (s1[i] != 'c' && s1[i] != 'C')
+			{
+				return flag;
+			}
+			break;
+		case 1:
+			if (s1[i] != 'o' && s1[i] != 'O')
+			{
+				return flag;
+			}
+			break;
+		case 2:
+			if (s1[i] != 'd' && s1[i] != 'D')
+			{
+				return flag;
+			}
+			break;
+		case 3:
+			if (s1[i] != 'e' && s1[i] != 'E')
+			{
+				return flag;
+			}
+			break;
+		case 4:
+			if (s1[i] != 'r' && s1[i] != 'R')
+			{
+				return flag;
+			}
+			break;
+		default:
+			break;
+		}
+
+	}
+	i++;
+	if (s1[i]== '\0')
+	{
+		flag = true;
+		return flag;
+	}
+	return flag;
+
+}
+int FindSubstringCoder(string& s)
+{
+	int count = 0;
+	string s1 = "coder";
+	int pos = -5;
+    
+	while ((pos = s.find(s1,pos+5)) != string::npos)
+	{
+		count++;
+
+	}
+	return count;
+}
+
+vector<string> findCoder(vector<string> A, int n) {
+	vector<pair<string, int> >CoderCount;
+	vector<string> result;
+	int count = 0;
+	if (A.size() == 0 || n == 0 )
+	{
+		return result;
+	}
+
+	for (int  i = 0; i < n; i++)
+	{
+		count = FindSubstringCoder(A[i]);
+		if (count != 0)
+		{
+			CoderCount.push_back(make_pair(A[i], count));
+		}
+		
+	}
+	stable_sort(CoderCount.begin(),CoderCount.end(),compare);
+	vector<pair<string, int> >::iterator iter;
+	for (iter = CoderCount.begin(); iter !=  CoderCount.end(); iter++)
+	{
+		result.push_back((*iter).first);
+	}
+	return result;
 }*/
 int main()
 {
-	//Ê®Áù½øÖÆ×ª»»ÎªÊ®½øÖÆ
+	//åå…­è¿›åˆ¶è½¬æ¢ä¸ºåè¿›åˆ¶
 	/*string s;
 	int len ;
 	int t;
@@ -186,7 +345,7 @@ int main()
 
 	}*/
 
-	//vector¶àÎ¬Êı×é±éÀú
+	//vectorå¤šç»´æ•°ç»„éå†
 	//	vector <double>   v;
 	//	vector <   vector <double>   >   v2d;
 	//	vector<int>::iterator iter;
@@ -215,11 +374,11 @@ int main()
 	cout << flag;*/
 
 
-	//×Ö·û´®ÖĞ¿Õ¸ñÌæ»»
+	//å­—ç¬¦ä¸²ä¸­ç©ºæ ¼æ›¿æ¢
 
 	/*	string s,t;
 	int n,j = 0;*/
-	//	t[0] = 'r';×¢ÒâÕâÑù¸³Öµ²»ÄÜÊä³ö
+	//	t[0] = 'r';æ³¨æ„è¿™æ ·èµ‹å€¼ä¸èƒ½è¾“å‡º
 	//	cout << t[0];
 	/*	string w = "mD lrD ufjqPnn XHkC CHpx fr IbsvbwHKSqghPsHrzfGiuD tyCtkl    SWmq  lWXCLDDhTbtNvbgGsa YrAazlMyB  nlpX egvhZeAM HaPva  gsREX N fh cd  t  gVjcj  Wfr fC";
 	cout << w.length() << endl;
@@ -236,7 +395,7 @@ int main()
 	t.push_back('0');
 	// t[j] = '%'
 	// t[j+1] = '2';
-	// t[j+2] = '0'; ÕâÑù¸³Öµ²»¶Ô£¬µ«²»ÖªµÀÎªÊ²Ã´£¬ÒòÎªtÃ»ÓĞ³õÊ¼»¯£¿»òÕßÓÃpush_back
+	// t[j+2] = '0'; è¿™æ ·èµ‹å€¼ä¸å¯¹ï¼Œä½†ä¸çŸ¥é“ä¸ºä»€ä¹ˆï¼Œå› ä¸ºtæ²¡æœ‰åˆå§‹åŒ–ï¼Ÿæˆ–è€…ç”¨push_back
 	t+= '%';
 	t+= '2';
 	t+= '0';
@@ -252,7 +411,7 @@ int main()
 
 	cout << t << endl;*/
 
-	//ÊäÈëÒ»¸öintĞÍÕûÊı£¬°´ÕÕ´ÓÓÒÏò×óµÄÔÄ¶ÁË³Ğò£¬·µ»ØÒ»¸ö²»º¬ÖØ¸´Êı×ÖµÄĞÂµÄÕûÊı ´ËÌâ¿ÉÀûÓÃÊı×éÀ´¼ÇÂ¼ÊÇ·ñÖØ¸´ 
+	//è¾“å…¥ä¸€ä¸ªintå‹æ•´æ•°ï¼ŒæŒ‰ç…§ä»å³å‘å·¦çš„é˜…è¯»é¡ºåºï¼Œè¿”å›ä¸€ä¸ªä¸å«é‡å¤æ•°å­—çš„æ–°çš„æ•´æ•° æ­¤é¢˜å¯åˆ©ç”¨æ•°ç»„æ¥è®°å½•æ˜¯å¦é‡å¤ 
 
 	/*long int number;
 	int i = 0;
@@ -292,7 +451,7 @@ int main()
 	cout << t;*/
 
 
-	//·´×ª¾ä×Ó
+	//åè½¬å¥å­
 	/*string s,t,m;
 	int i;
 	getline(cin,s);
@@ -329,12 +488,12 @@ int main()
 	cout << sstack.top() << endl;*/
 
 
-	//2016Ğ£ÕĞ°Ù¶È CÊĞÏÖÔÚÒª×ªÒÆÒ»Åú×ï·¸µ½DÊĞ£¬CÊĞÓĞnÃû×ï·¸£¬°´ÕÕÈëÓüÊ±¼äÓĞË³Ğò£¬ÁíÍâÃ¿¸ö×ï·¸ÓĞÒ»¸ö×ïĞĞÖµ£¬ÖµÔ½´ó×ïÔ½ÖØ¡£ÏÖÔÚÎªÁË·½±ã¹ÜÀí£¬ÊĞ³¤¾ö¶¨×ªÒÆÈëÓüÊ±¼äÁ¬ĞøµÄcÃû·¸ÈË£¬Í¬Ê±ÒªÇó×ªÒÆ·¸ÈËµÄ×ïĞĞÖµÖ®ºÍ²»³¬¹ıt£¬ÎÊÓĞ¶àÉÙÖÖÑ¡ÔñµÄ·½Ê½£¿ µÚÒ»ĞĞÊı¾İÈı¸öÕûÊı:n£¬t£¬c(1¡Ün¡Ü2e5,0¡Üt¡Ü1e9,1¡Üc¡Ün)£¬µÚ¶şĞĞ°´ÈëÓüÊ±¼ä¸ø³öÃ¿¸ö·¸ÈËµÄ×ïĞĞÖµai(0¡Üai¡Ü1e9)  
-	//ÊäÈëÀı×Ó:
+	//2016æ ¡æ‹›ç™¾åº¦ Cå¸‚ç°åœ¨è¦è½¬ç§»ä¸€æ‰¹ç½ªçŠ¯åˆ°Då¸‚ï¼ŒCå¸‚æœ‰nåç½ªçŠ¯ï¼ŒæŒ‰ç…§å…¥ç‹±æ—¶é—´æœ‰é¡ºåºï¼Œå¦å¤–æ¯ä¸ªç½ªçŠ¯æœ‰ä¸€ä¸ªç½ªè¡Œå€¼ï¼Œå€¼è¶Šå¤§ç½ªè¶Šé‡ã€‚ç°åœ¨ä¸ºäº†æ–¹ä¾¿ç®¡ç†ï¼Œå¸‚é•¿å†³å®šè½¬ç§»å…¥ç‹±æ—¶é—´è¿ç»­çš„cåçŠ¯äººï¼ŒåŒæ—¶è¦æ±‚è½¬ç§»çŠ¯äººçš„ç½ªè¡Œå€¼ä¹‹å’Œä¸è¶…è¿‡tï¼Œé—®æœ‰å¤šå°‘ç§é€‰æ‹©çš„æ–¹å¼ï¼Ÿ ç¬¬ä¸€è¡Œæ•°æ®ä¸‰ä¸ªæ•´æ•°:nï¼Œtï¼Œc(1â‰¤nâ‰¤2e5,0â‰¤tâ‰¤1e9,1â‰¤câ‰¤n)ï¼Œç¬¬äºŒè¡ŒæŒ‰å…¥ç‹±æ—¶é—´ç»™å‡ºæ¯ä¸ªçŠ¯äººçš„ç½ªè¡Œå€¼ai(0â‰¤aiâ‰¤1e9)  
+	//è¾“å…¥ä¾‹å­:
 	//3 100 2
 	//1 2 3
 
-	//Êä³öÀı×Ó:
+	//è¾“å‡ºä¾‹å­:
 	//2
 
 	/*   int n, t, c, i = 1, k;
@@ -371,7 +530,7 @@ int main()
 
 
 
-	//·´ÏòÊä³öÁĞ±í ·µ»ØvectorÊı×é
+	//åå‘è¾“å‡ºåˆ—è¡¨ è¿”å›vectoræ•°ç»„
 	/*    int n,number;
 
 	cin >> n;
@@ -383,13 +542,13 @@ int main()
 	q = L;
 	for (i = 1; i <= n; i++)
 	{
-	cin >> number;
-	ListNode *p = new ListNode;
+		cin >> number;
+		ListNode *p = new ListNode;
 
-	p->val = number;
-	p->next = NULL;
-	q->next = p;
-	q = p;
+		p->val = number;
+		p->next = NULL;
+		q->next = p;
+		q = p;
 
 	}
 	q = L->next;
@@ -408,7 +567,7 @@ int main()
 
 
 
-	//Á´±í·Ö¸î
+	//é“¾è¡¨åˆ†å‰²
 	/*   int n,number;
 	cin >> n;
 
@@ -421,13 +580,13 @@ int main()
 	q = L;
 	for (i = 1; i <= n; i++)
 	{
-	cin >> number;
-	ListNode *p = new ListNode;
+		cin >> number;
+		ListNode *p = new ListNode;
 
-	p->val = number;
-	p->next = NULL;
-	q->next = p;
-	q = p;
+		p->val = number;
+		p->next = NULL;
+		q->next = p;
+		q = p;
 
 	}
 	q = L->next;
@@ -460,7 +619,7 @@ int main()
 	}
 	else
 	{
-	break;
+		break;
 	}
 
 	}
@@ -508,7 +667,7 @@ int main()
 	}
 	cout << endl;*/
 
-	//»ªÎª±à³Ì  ¿ª·¢Ò»¸ö¼òµ¥´íÎó¼ÇÂ¼¹¦ÄÜĞ¡Ä£¿é£¬ÄÜ¹»¼ÇÂ¼³ö´íµÄ´úÂëËùÔÚµÄÎÄ¼şÃû³ÆºÍĞĞºÅ¡£´¦Àí£º1¡¢ ¼ÇÂ¼×î¶à8Ìõ´íÎó¼ÇÂ¼£¬Ñ­»·¼ÇÂ¼£¬¶ÔÏàÍ¬µÄ´íÎó¼ÇÂ¼£¨¾»ÎÄ¼şÃû³ÆºÍĞĞºÅÍêÈ«Æ¥Åä£©Ö»¼ÇÂ¼Ò»Ìõ£¬´íÎó¼ÆÊıÔö¼Ó£»2¡¢ ³¬¹ı16¸ö×Ö·ûµÄÎÄ¼şÃû³Æ£¬Ö»¼ÇÂ¼ÎÄ¼şµÄ×îºóÓĞĞ§16¸ö×Ö·û£»3¡¢ ÊäÈëµÄÎÄ¼ş¿ÉÄÜ´øÂ·¾¶£¬¼ÇÂ¼ÎÄ¼şÃû³Æ²»ÄÜ´øÂ·¾¶¡£
+	//åä¸ºç¼–ç¨‹  å¼€å‘ä¸€ä¸ªç®€å•é”™è¯¯è®°å½•åŠŸèƒ½å°æ¨¡å—ï¼Œèƒ½å¤Ÿè®°å½•å‡ºé”™çš„ä»£ç æ‰€åœ¨çš„æ–‡ä»¶åç§°å’Œè¡Œå·ã€‚å¤„ç†ï¼š1ã€ è®°å½•æœ€å¤š8æ¡é”™è¯¯è®°å½•ï¼Œå¾ªç¯è®°å½•ï¼Œå¯¹ç›¸åŒçš„é”™è¯¯è®°å½•ï¼ˆå‡€æ–‡ä»¶åç§°å’Œè¡Œå·å®Œå…¨åŒ¹é…ï¼‰åªè®°å½•ä¸€æ¡ï¼Œé”™è¯¯è®¡æ•°å¢åŠ ï¼›2ã€ è¶…è¿‡16ä¸ªå­—ç¬¦çš„æ–‡ä»¶åç§°ï¼Œåªè®°å½•æ–‡ä»¶çš„æœ€åæœ‰æ•ˆ16ä¸ªå­—ç¬¦ï¼›3ã€ è¾“å…¥çš„æ–‡ä»¶å¯èƒ½å¸¦è·¯å¾„ï¼Œè®°å½•æ–‡ä»¶åç§°ä¸èƒ½å¸¦è·¯å¾„ã€‚
 
 	/*   vector<ErrorRecord> errorrecode;
 	string address;
@@ -545,13 +704,7 @@ int main()
 	{
 	cout << errorrecode[j].address << " "<< errorrecode[j].linenumber <<" "<< errorrecode[j].count << endl;
 	}*/
-	//¶ş²æÊ÷¾µÏñ
-	/*   TreeNode *root;
-	CreateTree(&root);
-	PreOrder(root);
-	cout << endl;
-	ReverseTree(&root);
-	PreOrder(root);*/
+	
 	//evaluate-reverse-polish-notation
 /*	vector<string> expression = { "-3", "9", "*" };
 
@@ -559,7 +712,7 @@ int main()
 	vector<string>::iterator iter;
 	int result;
 
-	for (iter = expression.begin(); iter != expression.end(); iter++) //¿ÉÊ¹ÓÃfor(auto element: expression) elementÎªvectorÖĞµÄÃ¿¸öÔªËØ
+	for (iter = expression.begin(); iter != expression.end(); iter++) //å¯ä½¿ç”¨for(auto element: expression) elementä¸ºvectorä¸­çš„æ¯ä¸ªå…ƒç´ 
 	{
 
 
@@ -597,7 +750,7 @@ int main()
 	temp.pop();
 	cout << result << endl;*/
     
-    //letcode Sort a linked list in O(n log n) time using constant space complexity. µ¥Á´±í¹é²¢ÅÅĞò
+    //letcode Sort a linked list in O(n log n) time using constant space complexity. å•é“¾è¡¨å½’å¹¶æ’åº
 /*    int n;
 	cin >> n;
 	int *p = new int[n];
@@ -624,7 +777,36 @@ int main()
 		q = q->next;
 
 	}*/
+   //å¯»æ‰¾coder
+ /* vector<string> A,B;
+  string s;
+  while (getline(cin,s))
+  {
+	  s.push_back('\0');
+	  A.push_back(s);
+  }
 
+  B = findCoder(A,A.size());
+  for (vector<string>::iterator iter = B.begin(); iter != B.end(); iter++)
+  {
+	  cout << *iter << ",";
+  }*/
+/*	vector<int> p;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		int a;
+		cin >> a;
+		p.push_back(a);
+	}
+	Solution s;
+	int result = s.candy(p);
+	cout << result;*/
+    
+/*string s, abbr;
+cin >> s >> abbr;
+cout << boolalpha << validWordAbbreviation(s, abbr) << endl;*/
 
 	system("pause");
 	return 0;

@@ -458,7 +458,8 @@ int Partiton(int data[], int length, int start, int end)
 }*/
 
 //symmetric-tree 判断数是否为对称树 分为递归和非递归解法
-bool isSymmetricChild(TreeNode *lt, TreeNode *rt)
+//递归
+/*bool isSymmetricChild(TreeNode *lt, TreeNode *rt)
 {
 	if (!lt && !rt && lt->val == rt->val)
 		return true;
@@ -480,4 +481,151 @@ bool Solution::isSymmetric(TreeNode *root)
 
 	}
 	return isSymmetricChild(root->left, root->right);
+}*/
+
+
+//input all subset of a set
+/*void Solution::getSubSet(vector<int> &a, vector<int> &tag, int n)
+{
+	if (n == a.size())
+	{
+		for (int i = 0; i < n; i++)
+		{
+			if (tag[i] == 1)
+			{
+				
+				cout << a[i] << " ";
+			}
+		}
+		cout << endl;
+		return;
+	}
+
+ 	tag[n] = 0;
+	Solution::getSubSet(a,tag,n + 1);
+	tag[n] = 1;
+	Solution::getSubSet(a,tag,n + 1);
+}*/
+
+//candy
+//There are N children standing in a line. Each child is assigned a rating value.You are giving candies to these children subjected to the following requirements :Each child must have at least one candy.Children with a higher rating get more candies than their neighbors.What is the minimum candies you must give ?
+//顺序扫描一遍，逆序扫描一遍
+/*int Solution::candy(vector<int> &ratings) 
+{
+
+
+	int result = 0;
+	if (ratings.size() == 0)
+	{
+		return result;
+	}
+
+	vector<int> CandyCount(ratings.size(), 1);
+	
+	for (size_t i = 0; i < ratings.size()-1; i++)
+	{
+		if (ratings[i+1] > ratings[i])
+		{
+			CandyCount[i + 1] = CandyCount[i] + 1;
+
+		}
+
+	}
+	for (size_t i = ratings.size()-1; i >=1; i--)
+	{
+		if (ratings[i-1] > ratings[i] && CandyCount[i] >= CandyCount[i-1])
+		{
+			CandyCount[i - 1] = CandyCount[i] + 1;
+
+		}
+
+	}
+	for (size_t i = 0; i < ratings.size(); i++)
+	{
+		result += CandyCount[i];
+	}
+	return result;
+}*/
+
+//gas-station
+//There are N gas stations along a circular route, where the amount of gas at station i isgas[i].You have a car with an unlimited gas tank and it costscost[i]of gas to travel from station i to its next station(i + 1).You begin the journey with an empty tank at one of the gas stations.Return the starting gas station's index if you can travel around the circuit once, otherwise return -1.Note:The solution is guaranteed to be unique
+/*int Solution::canCompleteCircuit(vector<int> &gas, vector<int> &cost)
+{
+}*/
+
+//maximum-depth-of-binary-tree
+//自己写的代码
+/*int getDepth(TreeNode *root, int max)
+{
+	int max_right_depth = 0;
+	int max_left_depth = 0;
+	if (root == NULL)
+	{
+		return max-1;
+	}
+	if (root->left == NULL && root->right == NULL)
+	{
+		return max;
+	}
+	max_left_depth = getDepth(root->left, max+1);
+	max_right_depth = getDepth(root->right, max+1);
+	return max_left_depth > max_right_depth ? max_left_depth : max_right_depth;
 }
+int Solution::maxDepth(TreeNode *root) 
+{
+	
+	int total_max_depth = 0;
+	if (root == NULL)
+		return total_max_depth;
+
+	return total_max_depth = getDepth(root, 1);
+}*/
+//别人写的代码
+int Solution::maxDepth(TreeNode *root)
+{
+	if (root == NULL)
+		return 0;
+	int left_max = maxDepth(root->left);
+	int left_right = maxDepth(root->right);
+	return 1 + (left_max > left_right ? left_max : left_right);
+}
+
+
+//same tree
+bool isSameTree(TreeNode *p, TreeNode *q)
+{
+	
+	if (p == NULL && q== NULL)
+	{
+		return true;
+	}
+	if (p == NULL || q == NULL || q->val != p->val)
+	{
+		return false;
+	}	
+	return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+}
+
+
+//minimum depth of binary tree
+//递归思路 自己写的
+int Solution::run(TreeNode *root) {
+
+	if (root == NULL)
+		return 0;
+	if (root->left == NULL && root->right == NULL)
+		return 1;
+
+	int left = run(root->left);
+	int right = run(root->right);
+
+
+	if (left == 0)
+		return right + 1;
+	else if (right == 0)
+		return left + 1;
+	else
+		return min(left, right) + 1;
+}
+
+

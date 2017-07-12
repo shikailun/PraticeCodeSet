@@ -189,3 +189,394 @@ int Solution::pop() {
 
 	return head;
 }*/
+
+//树的子结构
+/*bool FindSubTree(TreeNode* pRoot1, TreeNode* pRoot2)
+{
+	bool result1 = false,result2 = false;
+	if (pRoot2 == NULL)//注意 pRoot2的判断应该在proot1之前，因为如果叶子节点root1和root2都为空，但返回的是false
+	{
+		return true;
+	}
+	if (pRoot1 == NULL)
+	{
+		return false;
+	}
+	
+	if (pRoot1->val != pRoot2->val)
+	{
+		return false;
+	}
+	result1 = FindSubTree(pRoot1->left, pRoot2->left);
+	result2 = FindSubTree(pRoot1->right, pRoot2->right);
+	return result1 && result2;
+		
+}
+
+bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+{
+	bool result = false;
+	if (pRoot1 != NULL && pRoot2 != NULL)
+	{
+		if (pRoot1->val == pRoot2->val)
+		{
+			result = FindSubTree(pRoot1, pRoot2);
+		}
+		if (result == false)
+		{
+			result = HasSubtree(pRoot1->left, pRoot2);
+		}
+		if (result == false)
+		{
+			result = HasSubtree(pRoot1->right, pRoot2);
+		}
+
+	}
+	
+		
+	
+	return result;
+}*/
+//二叉树镜像
+//递归方法
+/*void Solution::Mirror(TreeNode *pRoot)
+{
+	if (pRoot == NULL)
+		return;
+	if (pRoot->left == NULL && pRoot->right == NULL)
+		return;
+	swap(pRoot->left, pRoot->right);
+	Mirror(pRoot->left);
+	Mirror(pRoot->right);
+}*/
+//非递归方法
+/*void Solution::Mirror(TreeNode *pRoot)
+{
+	if (pRoot == NULL)
+		return;
+	if (pRoot->left == NULL && pRoot->right == NULL)
+		return;
+	queue<TreeNode *> t;
+	t.push(pRoot);
+	TreeNode * r;
+	while (t.empty() != true)
+	{
+
+		r = t.front();
+		t.pop();
+		swap(r->left, r->right);
+		if (r->right)
+		{
+			t.push(r->right);
+
+		}
+		if (r->left)
+		{
+			t.push(r->left);
+		}
+
+	}
+}*/
+
+//判断栈的压入，弹出序列
+//自己写的代码
+/*bool Solution::IsPopOrder(vector<int> pushV, vector<int> popV) 
+{
+	stack<int>temp;
+	bool flag = false;
+	if (pushV.size() == 0 || popV.size() == 0)
+	{
+		return flag;
+	}
+
+	int i = 0, j = 0;
+	while (pushV[i] != popV[0] && i < pushV.size())
+	{
+		temp.push(pushV[i]);
+		i++;
+	}
+	if (i < pushV.size() && pushV[i] == popV[0])
+	{
+		temp.push(pushV[i]);
+		i++;
+
+	}
+	while (!temp.empty())
+	{
+		if (popV[j] == temp.top())
+		{
+			j++;
+			temp.pop();
+			continue;
+		}
+		else
+		{
+			if (i >= pushV.size() && temp.top() != popV[j])
+			{
+				return flag;
+
+			}
+			while ( i< pushV.size() && pushV[i] != popV[j] )
+			{
+				temp.push(pushV[i]);
+				i++;
+			}
+			if (i< pushV.size() && pushV[i] == popV[j])
+			{
+				temp.push(pushV[i]);
+				i++;
+			}
+
+		}
+
+	}
+	flag = true;
+	return flag;
+}*/
+//别人写的
+/*bool Solution::IsPopOrder(vector<int> pushV, vector<int> popV) {
+	if (pushV.size() == 0) return false;
+	vector<int> stack;
+	for (int i = 0, j = 0; i < pushV.size();) {
+		stack.push_back(pushV[i++]);
+		while (j < popV.size() && stack.back() == popV[j]) {
+			stack.pop_back();
+			j++;
+		}
+	}
+	return stack.empty();
+}*/
+
+
+//数组中出现次数超过一半的数字
+//查找用unordered_map,它的底层是由哈希表实现的，相当于boost中的hash_map 
+//自己的解法
+/*int MoreThanHalfNum_Solution(vector<int> numbers) {
+	unordered_map<int, int> result;
+	for (size_t i = 0; i < numbers.size(); i++)
+	{
+		result[numbers[i]]++;
+		
+	}
+	int max = 0;
+	for (size_t i = 0; i < numbers.size(); i++)
+	{
+		if (result[numbers[i]] > (numbers.size() / 2))
+			max = result[numbers[i]];
+
+	}
+	return max;
+}*/
+//别人的解法
+//首先将容器中的数字排序，因为要求输出重复次数大于数组大小一般的书，排序结束后，相同的数字都在相邻位置，直接判断数组当前位置的数字 与 （数组位置+数组一半长度）  位置的数字是否相等，相等则输出该数字
+/*int MoreThanHalfNum_Solution(vector<int> numbers) {
+
+	int size = numbers.size() / 2;
+	sort(numbers.begin(), numbers.end());
+	for (int i = 0; i + size<numbers.size(); i++)
+	{
+		if (numbers[i] == numbers[i + size])
+			return numbers[i];
+	}
+	return 0;
+}*/
+ 
+
+//二叉搜索树的后序遍历序列
+//递归
+/*bool JudgeSequence(vector<int> &sequence, int start, int end)
+{
+	if (start >= end)
+	{
+		return true;
+		
+	}
+	int root = sequence[end];
+	int i = start;
+	for (;  i < end; i++)
+	{
+		if (sequence[i] > root)
+			break;
+	}
+	int j = i;
+	for (; j < end; j++)
+	{
+		if (sequence[j] < root)
+		{
+			return false;
+		}
+	}
+
+	return JudgeSequence(sequence, 0, i-1) && JudgeSequence(sequence, i, j-1);
+}
+bool Solution::VerifySquenceOfBST(vector<int> sequence) 
+{
+	if (sequence.size() == 0)
+	{
+		return false;
+	}
+	return JudgeSequence(sequence, 0, sequence.size() - 1);
+}*/
+//非递归
+/*bool Solution::VerifySquenceOfBST(vector<int> sequence)
+{
+
+
+    int size = sequence.size();
+	if (0 == size)return false;
+
+	int i = 0;
+	while (--size)
+	{
+		while (sequence[i++]<sequence[size]);
+		while (sequence[i++]>sequence[size]);
+
+		if (i<size)return false;
+		i = 0;
+	}
+	return true;
+}*/
+
+
+
+//删除链表中的重复节点
+//在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
+/*ListNode* deleteDuplication(ListNode* pHead)
+{
+	if (pHead == nullptr)
+		return pHead;
+	ListNode *nHead = new ListNode(-1);
+	ListNode *start = pHead, *p, *r = nHead;
+	int val = -10000;
+	while (start != nullptr && start->next != nullptr)
+	{
+
+		if (start->val == start->next->val)//确定第一次重复出现的地方
+		{
+			val = start->val;
+			p = start;
+			start = start->next;
+			delete p;
+			continue;
+		}
+		else if (val == start->val) //val保存重复值，为了确定重复值最后出现的地方
+		{
+			p = start;
+			start = start->next;
+			delete p;
+			continue;
+		}
+		else
+		{
+			p = start;
+			start = start->next;
+			p->next = nullptr;
+			r->next = p;
+			r = r->next;
+		}
+	}
+	if (val == start->val)
+	{
+		delete start;
+	}
+	else
+	{
+		r->next = start;
+		r = r->next;
+	}
+	p = nHead;
+	nHead = nHead->next;
+	delete p;
+	return nHead;
+}*/
+
+
+
+//最小k个数
+//思路1：使用make_heap()进行建堆
+/*vector<int> Solution::GetLeastNumbers_Solution(vector<int> input, int k)
+{
+	if (input.size() == 0 || k <= 0 || input.size() < k)
+	{
+		return vector<int>();
+	}
+	vector<int> res(input.begin(), input.begin()+k);
+
+	make_heap(res.begin(), res.end());
+
+	for (size_t i = k; i < input.size(); i++)
+	{
+		if (input[i] < res[0])
+		{
+			pop_heap(res.begin(), res.end());
+			res.pop_back();
+			res.push_back(input[i]);
+			push_heap(res.begin(), res.end());
+		}
+
+	}
+	sort_heap(res.begin(), res.end());
+	return res;
+}*/
+//思路二：因为set 和 multiset的底层实现是红黑树，红黑树是一个特殊的二叉排序树 用multiset来实现
+/*vector<int> Solution::GetLeastNumbers_Solution(vector<int> input, int k)
+{
+	if (input.size() == 0 || k <= 0 || input.size() < k)
+	{
+		return vector<int>();
+	}
+	multiset<int, greater<int> > leastNumber;//注：这里greater后面不加括号
+	multiset<int, greater<int> >::iterator iter;
+
+	for (size_t i = 0; i < input.size(); i++)
+	{
+		if (leastNumber.size() < k)
+		{
+			leastNumber.insert(input[i]);
+			
+		}
+		else
+		{
+			iter = leastNumber.begin();
+			if (input[i] < *iter)
+			{
+				leastNumber.erase(*iter);
+				leastNumber.insert(input[i]);
+			}
+		}
+
+	}
+
+	return vector<int> (leastNumber.begin(),leastNumber.end());
+}*/
+
+
+int Solution::FindGreatestSumOfSubArray(vector<int> array) {
+	int n = array.size();
+	if (n == 0)
+	{
+		return array.size();
+
+	}
+
+	int *f = new int[n], max = 0x80000000; //注意，计算机中的数都已补码形式存在，此值为int的最小值，int的最大值为0x7fffffff
+	for (size_t i = 0; i < array.size(); i++)
+	{
+		if (i == 0 || f[i-1] < 0)
+		{
+			f[i] = array[i];
+
+		}
+	    if (i != 0 && f[i-1] > 0)
+		{
+			f[i] = f[i - 1] + array[i];
+
+		}
+		if (f[i] > max)
+		{
+			max = f[i];
+		}
+	}
+	delete[] f;
+	return max;
+}
